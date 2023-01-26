@@ -1,7 +1,7 @@
 type Operation = {
   operation: {
     parameters: {
-      query: Record<string, string | number>;
+      query: Record<string, unknown>;
     };
   };
 };
