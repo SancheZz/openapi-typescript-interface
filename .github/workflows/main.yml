@@ -38,6 +38,7 @@ jobs:
           pnpm version patch -m "upgraded to %s"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM }}
+          CI: false
 
       - run: |
           git pull --rebase
