@@ -8,15 +8,13 @@ export type Operation = {
   };
 };
 
-type GetContent<T> = T extends OperationContent
-  ? T['content'] extends infer Content
-    ? Content[keyof Content]
-    : never
-  : never;
-
-type GetUnknown<ResponseContent> = [ResponseContent] extends [never]
-  ? unknown
-  : ResponseContent
+type GetContent<T> = [T] extends [never]
+  ? never
+  : T extends OperationContent
+    ? T['content'] extends infer Content
+      ? Content[keyof Content]
+      : never
+    : unknown;
 
 type IsOk<Status> = Status extends 200 | 201 | 202 | 203 | 204 | 205 | 206 ? true : false
 
@@ -25,7 +23,7 @@ type GetResponse<Responses> = {
     ? never
     : Key]: {
     status: Key;
-    body: GetUnknown<GetContent<Responses[Key]>>
+    body: GetContent<Responses[Key]>
     ok: IsOk<Key>
   };
 };
