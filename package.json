@@ -8,7 +8,7 @@
   ],
   "types": "./src/index.d.ts",
   "scripts": {
-    "test": "tsc"
+    "test": "tsc --build"
   },
   "keywords": [
     "openapi",
