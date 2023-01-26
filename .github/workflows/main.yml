@@ -1,0 +1,51 @@
+name: build and publish
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'index.d.ts'
+      - 'pnpm-lock.yaml'
+
+jobs:
+  publish:
+    name: check and publish package
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: install pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 7.26.0
+
+      - name: set node version to 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: build
+        run: |
+          pnpm install
+          pnpm test
+          git config user.name github-actions
+          git config user.email ${{ secrets.EMAIL }}
+          pnpm version patch -m "upgraded to %s"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM }}
+
+      - run: |
+          git pull --rebase
+          git push origin HEAD --follow-tags
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: publish
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM }}
