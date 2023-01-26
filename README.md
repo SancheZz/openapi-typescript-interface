@@ -13,6 +13,7 @@ const request: GetSwaggerInterface<paths> = async (options): Promise<any> => {
   return {
     status: response.status,
     body,
+    ok: response.ok,
   };
 };
 
@@ -24,7 +25,7 @@ const response = await request({
 });
 
 // success
-if (response.status === 200) {
+if (response.ok) {
   response.body;
 }
 ```
