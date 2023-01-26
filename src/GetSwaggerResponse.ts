@@ -14,7 +14,7 @@ type GetContent<T> = T extends OperationContent
     : never
   : never;
 
-type GetUnknown<ResponseContent> = [never] extends [ResponseContent]
+type GetUnknown<ResponseContent> = [ResponseContent] extends [never]
   ? unknown
   : ResponseContent
 

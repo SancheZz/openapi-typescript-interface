@@ -10,7 +10,10 @@
   "scripts": {
     "test": "tsc"
   },
-  "keywords": [],
+  "keywords": [
+    "openapi",
+    "swagger"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
