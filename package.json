@@ -6,7 +6,7 @@
   "files": [
     "src"
   ],
-  "types": "./index.d.ts",
+  "types": "./src/index.d.ts",
   "scripts": {
     "test": "tsc"
   },
