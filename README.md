@@ -7,7 +7,17 @@ import type { GetSwaggerInterface } from '@yasanchezz/openapi-typescript-interfa
 import type { paths } from '../swagger'; // or where do you place swagger types?
 
 const request: GetSwaggerInterface<paths> = async (options): Promise<any> => {
-  const response = await fetch(options);
+  const response = await fetch(options.path, {
+     body: 'body' in options && 'headers' in options
+      ? JSON.stringify(options.body) // for example
+      : null,
+    cache: 'no-cache',
+    headers: new Headers(options.headers),
+    method: options.method.toUpperCase(),
+    mode: 'cors',
+    signal: options.signal || null,
+  });
+
   const body = await response.json();
 
   return {
