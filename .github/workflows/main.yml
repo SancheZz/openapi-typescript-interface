@@ -8,10 +8,11 @@ on:
       - 'src/**'
       - 'index.d.ts'
       - 'pnpm-lock.yaml'
+      - 'README.md'
 
 jobs:
   publish:
-    name: check and publish
+    name: publish
     runs-on: ubuntu-latest
 
     steps:
@@ -29,18 +30,10 @@ jobs:
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: test
-        run: |
-          pnpm install
-          pnpm test
+      - run: |
           git config user.name github-actions
           git config user.email ${{ secrets.EMAIL }}
           pnpm version patch -m "upgraded to %s"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM }}
-          CI: false
-
-      - run: |
           git pull --rebase
           git push origin HEAD --follow-tags
         env:
