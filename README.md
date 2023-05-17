@@ -6,7 +6,11 @@ If you wanna use [`openapi-typescript`](https://www.npmjs.com/package/openapi-ty
 import type { GetSwaggerInterface } from '@yasanchezz/openapi-typescript-interface';
 import type { paths } from '../swagger'; // or where do you place swagger types?
 
-const request: GetSwaggerInterface<paths> = async (options): Promise<any> => {
+type UserParameters = {
+  sginal?: AbortSignal | null;
+};
+
+const request: GetSwaggerInterface<paths, UserParameters> = async (options): Promise<any> => {
   const response = await fetch(options.path, {
      body: 'body' in options && 'headers' in options
       ? JSON.stringify(options.body) // for example

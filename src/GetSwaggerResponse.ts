@@ -11,20 +11,20 @@ export type Operation = {
 type GetContent<T> = [T] extends [never]
   ? never
   : T extends OperationContent
-    ? T['content'] extends infer Content
-      ? Content[keyof Content]
-      : never
-    : unknown;
+  ? T['content'] extends infer Content
+    ? Content[keyof Content]
+    : never
+  : unknown;
 
-type IsOk<Status> = Status extends 200 | 201 | 202 | 203 | 204 | 205 | 206 ? true : false
+type IsOk<Status> = Status extends 200 | 201 | 202 | 203 | 204 | 205 | 206
+  ? true
+  : false;
 
 type GetResponse<Responses> = {
-  [Key in keyof Responses as Key extends 'default'
-    ? never
-    : Key]: {
+  [Key in keyof Responses as Key extends 'default' ? never : Key]: {
     status: Key;
-    body: GetContent<Responses[Key]>
-    ok: IsOk<Key>
+    body: GetContent<Responses[Key]>;
+    ok: IsOk<Key>;
   };
 };
 
