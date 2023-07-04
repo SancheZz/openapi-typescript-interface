@@ -28,8 +28,8 @@ type GetResponse<Responses> = {
   };
 };
 
-export type GetSwaggerResponse<FoundPath> = FoundPath extends Operation
+export type GetSwaggerResponse<FoundPath, UserOutput> = FoundPath extends Operation
   ? GetResponse<FoundPath['operation']['responses']> extends infer Value
-    ? Value[keyof Value]
+    ? Value[keyof Value] & UserOutput
     : never
   : void;

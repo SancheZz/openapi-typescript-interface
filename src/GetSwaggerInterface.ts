@@ -9,7 +9,8 @@ import type { DefaultPath } from './defaults';
 
 export type GetSwaggerInterface<
   paths,
-  UserParameters = Record<never, never>,
+  UserInput = Record<never, never>,
+  UserOutput = Record<never, never>,
   MappedPath extends DefaultPath = GetMappedPath<paths>,
 > = <
   SwaggerPath extends MappedPath['path'],
@@ -19,8 +20,8 @@ export type GetSwaggerInterface<
   options: {
     path: SwaggerPath;
     method: SwaggerMethod;
-  } & UserParameters &
+  } & UserInput &
     GetSwaggerHeaders<FoundPath> &
     GetSwaggerSearchParams<FoundPath> &
     GetSwaggerRequestBody<FoundPath>,
-) => Promise<GetSwaggerResponse<FoundPath>>;
+) => Promise<GetSwaggerResponse<FoundPath, UserOutput>>;
